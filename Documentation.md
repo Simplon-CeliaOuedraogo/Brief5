@@ -14,7 +14,7 @@ Sur [Gandi](https://www.gandi.net/fr), dans *Nom de domaine*, il faut choisir le
 
 ### Vérifier la configuration avec le navigateur web
 
-**http://vote.>domaine<.space**
+**http:// >sous-domaine< (vote). >domaine< .space**
 
 ![](https://i.imgur.com/hf5KuFa.png)
 
