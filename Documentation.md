@@ -44,7 +44,9 @@ Il faut ensuite installer le plugin **certbot-plugin-gandi** :
 
 Il faut ensuite créer un fichier de configuration *gandi.ini*, en indiquant la clé d'API, et en modifier l'attribution des droits (seul l'utilisateur bénéficie des autorisations de lecture et d'écriture) : 
 ``# live dns v5 api key``
+
 ``dns_gandi_api_key=APIKEY``
+
 ``chmod 600 gandi.ini``
 
 Il faut ensuite lancer certbot et utiliser le plugin pour authentifier et utiliser le fichier de configuration créé précédemment : 
@@ -58,8 +60,11 @@ Il faut ensuite lancer certbot et utiliser le plugin pour authentifier et utilis
 Les dossiers dans lesquels le certificat TLS et la clé privée ont été enregistrés dans un emplacement quelconque. Il est donc possible de les déplacer dans un dossier de notre choix, et de se donner tout les droits sur les fichiers.
 
 ``sudo cp /etc/letsencrypt/live/vote.simplon-celia.space/fullchain.pem ./fullchain.pem``
+
 ``sudo cp /etc/letsencrypt/live/vote.simplon-celia.space/privkey.pem ./privkey.pem``
+
 ``sudo chown celia:celia privkey.pem``
+
 ``sudo chown celia:celia fullchain.pem``
 
 Concaténation du certificat TLS et de la clé privée dans un seul fichier : 
