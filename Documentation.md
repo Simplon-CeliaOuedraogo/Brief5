@@ -105,59 +105,89 @@ Utiliser openssl pour convertir et protéger le fichier PKCS12 avec un mot de pa
 
 - Changement du port frontend en Https, port 443
 
-***`` frontend_port {``
+***`` frontend_port {``***
 
-***``   name = "https"``
+***``   name = "https"``***
 
-***``   port = 443``
+***``   port = 443``***
 
 ***`` }``***
 
 `` frontend_ip_configuration {``
+
 ``   name                 = "front-ip"``
+
 ``   public_ip_address_id =`` ``azurerm_public_ip.public_ip_gateway.id``
+
 `` }``
 
 `` backend_address_pool {``
+
 ``   name = "backend_pool"``
+
 `` }``
 
 `` backend_http_settings {``
+
 ``   name                  = "http-settings"``
+
 ``   cookie_based_affinity = "Disabled"``
+
 ``   path                  = "/"``
+
 ``   port                  = 80``
+
 ``   protocol              = "Http"``
+
 ``   request_timeout       = 10``
+
 `` }``
 
 - Configuration du listener en protocole https, et ajout du nom du certificat
 
-***`` http_listener {``
-``   name                           = "listener"``
-``   frontend_ip_configuration_name = "front-ip"``
-``   frontend_port_name             = "https"``
-``   protocol                       = "Https"``
-``   ssl_certificate_name = "certificat"``
-`` }``***
+***`` http_listener {``***
+
+***``   name                           = "listener"``***
+
+***``   frontend_ip_configuration_name = "front-ip"``***
+
+***``   frontend_port_name             = "https"``***
+
+***``   protocol                       = "Https"``***
+
+***``   ssl_certificate_name = "certificat"``***
+
+***`` }``***
 
 `` request_routing_rule {``
+
 ``   name                       = "rule-1"``
+
 ``   rule_type                  = "Basic"``
+
 ``   http_listener_name         = "listener"``
+
 ``   backend_address_pool_name  = "backend_pool"``
+
 ``   backend_http_settings_name = "http-settings"``
+
 ``   priority                   = 100``
+
 `` }``
 
 - Ajout du certificat TLS (chemin et mot de passe)
 
-***`` ssl_certificate {``
-``  name = "certificat"``
-``  data = "${filebase64(("//wsl$/Ubuntu/home/celia/certificat.pfx"))}"``
-``  password = "*****"``
-`` }``***
-``}``
+***`` ssl_certificate {``***
+
+***``  name = "certificat"``***
+
+***``  data = "${filebase64(("//wsl$/Ubuntu/home/celia/certificat.pfx"))}"``***
+
+***``  password = "*****"``***
+
+***`` }``***
+
+***``}``***
 
 ## Chapitre 4 : Chargement du certificat dans Azure KeyVault en utilisant Azure CLI
 
