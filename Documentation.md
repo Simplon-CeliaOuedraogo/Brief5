@@ -26,7 +26,9 @@ Sur une machine Linux, il faut installer python3, pip et certbot.
 Ici, il y a eu un cas particulier : à cause d'un problème de versions, il a fallu les installer sur une machine virtuelle.
 
 ``sudo apt-get install python3-venv``
+
 ``python3 -m venv venv``
+
 ``sudo ./venv/bin/pip install certbot``
 
 ### Utiliser Certbot pour [créer un certificat](https://github.com/obynio/certbot-plugin-gandi) en utilisant le challenge DNS
