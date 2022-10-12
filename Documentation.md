@@ -78,27 +78,40 @@ Utiliser openssl pour convertir et protéger le fichier PKCS12 avec un mot de pa
 ### Importation du certificat au format PKCS12 dans une Application Gateway existante sur Terraform et activation du HTTPS sur l’Application Gateway sur le port 443
 
 ``resource "azurerm_application_gateway" "gateway" {``
+
  ``name                = "gateway"``
+ 
  ``resource_group_name = azurerm_resource_group.rg.name``
+ 
  ``location            = azurerm_resource_group.rg.location``
 
 `` sku {``
+
 ``   name     = "Standard_v2"``
+
 ``   tier     = "Standard_v2"``
+
 ``   capacity = 2``
+
 `` }``
 
 `` gateway_ip_configuration {``
+
 ``   name      = "ip-configuration"``
+
 ``   subnet_id = azurerm_subnet.subnet_gateway.id``
+
 `` }``
 
 - Changement du port frontend en Https, port 443
 
 ***`` frontend_port {``
-``   name = "https"``
-``   port = 443``
-`` }``***
+
+***``   name = "https"``
+
+***``   port = 443``
+
+***`` }``***
 
 `` frontend_ip_configuration {``
 ``   name                 = "front-ip"``
