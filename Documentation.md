@@ -40,6 +40,7 @@ Dans les paramètres de Gandi, il y a un onglet *Compte et sécurité*, qui donn
 ![](https://i.imgur.com/nVF3925.png)
 
 Il faut ensuite installer le plugin **certbot-plugin-gandi** : 
+
 ``sudo ./venv/bin/pip install certbot-plugin-gandi``
 
 Il faut ensuite créer un fichier de configuration *gandi.ini*, en indiquant la clé d'API, et en modifier l'attribution des droits (seul l'utilisateur bénéficie des autorisations de lecture et d'écriture) : 
@@ -90,16 +91,15 @@ resource "azurerm_application_gateway" "gateway" {``
    name      = "ip-configuration"
    subnet_id = azurerm_subnet.subnet_gateway.id
  }
-}
 ```
 
 - Changement du port frontend en Https, port 443
 
 ```control 
- frontend_port {
-   name = "https"
-   port = 443
- }
+#frontend_port {
+#  name = "https"
+#  port = 443
+#}
  frontend_ip_configuration {
    name                 = "front-ip"
    public_ip_address_id =`` ``azurerm_public_ip.public_ip_gateway.id
@@ -120,13 +120,13 @@ resource "azurerm_application_gateway" "gateway" {``
 - Configuration du listener en protocole https, et ajout du nom du certificat
 
 ```control
- http_listener {``***
-   name                           = "listener"
-   frontend_ip_configuration_name = "front-ip"
-   frontend_port_name             = "https"
-   protocol                       = "Https"
-   ssl_certificate_name = "certificat"
- }
+#http_listener {``***
+#  name                           = "listener"
+#  frontend_ip_configuration_name = "front-ip"
+#  frontend_port_name             = "https"
+#  protocol                       = "Https"
+#  ssl_certificate_name = "certificat"
+#}
  request_routing_rule {
    name                       = "rule-1"
    rule_type                  = "Basic"
@@ -140,24 +140,28 @@ resource "azurerm_application_gateway" "gateway" {``
 - Ajout du certificat TLS (chemin et mot de passe)
 
 ```control
- ssl_certificate {
-  name = "certificat"
-  data = "${filebase64(("//wsl$/Ubuntu/home/celia/certificat.pfx"))}"
-  password = "*****"
- }
+#ssl_certificate {
+# name = "certificat"
+# data = "${filebase64(("//wsl$/Ubuntu/home/celia/certificat.pfx"))}"
+# password = "*****"
+#}
 }
 ```
 
 ## Chapitre 4 : Chargement du certificat dans Azure KeyVault en utilisant Azure CLI
 
 - Création du keyvault
+
 ``az keyvault create --resource-group Brief5-Celia --name B5vault --location westus``
 
 - Importation du certificat
+
 ``az keyvault certificate import --file //wsl$/Ubuntu/home/celia/certificat.pfx --name certificat --vault-name B5vault --password nabangba``
 
 - Importation de la clé privée
+
 ``az keyvault key import -n privkey --pem-file //wsl$/Ubuntu/home/celia/privkey.pem --vault-name B5vault``
 
 - Vérification que le certificat est dans le keyvault
+
 ``az keyvault certificate show --vault-name B5vault --name certificat``
